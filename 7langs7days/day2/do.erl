@@ -1,8 +1,8 @@
 -module(do).
 -export([select/2]).
 -export([total_price/1]).
--export([])
-
+-export([winner/1, winner/2]).
+-compile([export_all]).
 % Bruce A. Tate, Seven Languages in Seven Weeks, ch. 6,
 % day 2 do
 
@@ -40,3 +40,30 @@ total_price(Items) ->
 %    the winner (x or o) if a winner has been determined,
 %    cat if there are no more possible moves, or
 %    no_winner if no player has won yet.
+winner(x, Board) when score(x, Board) == 15 -> x;
+winner(o, Board) when score(o, Board) == 15 -> y.
+
+score(Player, Board) ->
+  Weights = [8,1,6,3,5,7,4,9,2],
+  Hash = lists:zip(Board, Weights),
+  Hit = fun({P,_W}) -> P == Player end,
+  Hits  = lists:filter(Hit, Hash),
+  Add = fun({_P,V}, Sum) -> Sum + V end,
+  Score = lists:foldl(Add, 0, Hits),
+  Score.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
