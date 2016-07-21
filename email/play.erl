@@ -11,7 +11,9 @@ parse(Body) when is_list(Body) ->
 
 parse({T, ST, Hs, Ps, B}) ->
   #{
-    <<"type">> => binary:list_to_bin(binary:bin_to_list(T) ++ "_" ++ binary:bin_to_list(ST)),
+    <<"type">> => binary:list_to_bin(binary:bin_to_list(T) ++
+                  "_" ++
+                  binary:bin_to_list(ST)),
     <<"headers">> => normalize(Hs) ++ normalize(Ps),
     <<"body">> => parse(B)
   }.
