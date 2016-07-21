@@ -1,7 +1,6 @@
 -module(do).
 -export([select/2]).
 -export([total_price/1]).
--export([winner/1, winner/2]).
 -compile([export_all]).
 % Bruce A. Tate, Seven Languages in Seven Weeks, ch. 6,
 % day 2 do
@@ -40,23 +39,33 @@ total_price(Items) ->
 %    the winner (x or o) if a winner has been determined,
 %    cat if there are no more possible moves, or
 %    no_winner if no player has won yet.
-winner(x, Board) when score(x, Board) == 15 -> x;
-winner(o, Board) when score(o, Board) == 15 -> y.
+score(B =[B1,B2,B3, B4,B5,B6, B7,B8,B9]) ->
+  P = [ 0, 1, 2,  3, 4, 5,  6, 7, 8],
+  W = [ 8, 1, 6,  3, 5, 7,  4, 9, 2],
+  Board = lists:zip3(B, P, W),
 
-score(Player, Board) ->
-  Weights = [8,1,6,3,5,7,4,9,2],
-  Hash = lists:zip(Board, Weights),
-  Hit = fun({P,_W}) -> P == Player end,
-  Hits  = lists:filter(Hit, Hash),
-  Add = fun({_P,V}, Sum) -> Sum + V end,
-  Score = lists:foldl(Add, 0, Hits),
-  Score.
+  io:format("~p\n", [Board]),
 
+  Row_posistions    = [{0,1,2}, {3,4,5}, {6,7,8}],
+  Column_posistions = [{0,3,6}, {1,4,7}, {2,5,8}],
+  Diag_posistions   = [{0,4,8}, {2,4,6},
 
-
+  Rows = lists:filter(fun({M,P,W}) ->  end, Board),
 
 
+  io:format("rows  = ~p\n", [Rows]).
+  % io:format("cols  = ~p\n", [Cols]),
+  % io:format("diags = ~p\n", [Diags]).
 
+  % [{x, 15}, {o, }]
+
+
+
+
+
+
+
+    % = [ x, x, x,  e, o, e,  e, o, o],
 
 
 
